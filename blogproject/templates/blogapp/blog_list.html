@@ -1,0 +1,132 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>blog List</h1>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Created by</th>
+            <th>Publidhed At</th>
+            
+        </tr>
+        {% for blog in blogs %}
+        <tr>
+            <td>{{ blog.title }}</td>
+            <td>{{ blog.description }}</td>
+            <td>{{ blog.created_by }}</td>
+            <td>{{ blog.published_date }}</td>
+            <td><a href="{% url 'blogapp:update' blog.id %}">Edit</a></td>
+            <td><a href="{% url 'blogapp:delete' blog.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'blogapp:create' %}">Add new blog</a>
+</body>
+</html> {% endcomment %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .blog-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .blog-card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+        .blog-card:hover {
+            transform: scale(1.03);
+        }
+        .blog-card h2 {
+            font-size: 20px;
+            margin: 15px;
+            color: #333;
+        }
+        .blog-card p {
+            margin: 0 15px 15px;
+            color: #555;
+        }
+        .blog-meta {
+            font-size: 14px;
+            color: #777;
+            margin: 0 15px 15px;
+        }
+        .blog-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            border-top: 1px solid #eee;
+        }
+        .blog-actions a {
+            text-decoration: none;
+            color: #0073e6;
+            font-weight: bold;
+        }
+        .add-blog {
+            margin-left: 18%;
+            {% comment %} margin-right: ; {% endcomment %}
+            display: block;
+            text-align: center;
+            width: 60%  ;
+            margin-top: 30px;
+            font-size: 18px;
+            text-decoration: none;
+            color: #fff;
+            background: #0073e6;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+        .add-blog:hover {
+            background: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Blog List</h1>
+    <div class="blog-container">
+        {% for blog in blogs %}
+        <div class="blog-card">
+            <h2>{{ blog.title }}</h2>
+            <p>{{ blog.description|truncatewords:20 }}</p>
+            <div class="blog-meta">
+                <p><strong>Created by:</strong> {{ blog.created_by }}</p>
+                <p><strong>Published:</strong> {{ blog.published_date }}</p>
+            </div>
+            <div class="blog-actions">
+                <a href="{% url 'blogapp:update' blog.id %}">Edit</a>
+                <a href="{% url 'blogapp:delete' blog.id %}">Delete</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'blogapp:create' %}" class="add-blog">➕ Add New Blog</a>
+</body>
+</html>
